@@ -82,19 +82,19 @@
     <div class="panel-scroll">
 
       <div class="panel__list">
-        <div class="panel__list-el">
+        <div class="panel__list-el" data-shader=0 data-selectedShader={selectedShader.id === 0 && true}>
           <span />
         </div>
-        <div class="panel__list-el">
+        <div class="panel__list-el" data-shader=1 data-selectedShader={selectedShader.id === 1 && true}>
           <span />
         </div>
-        <div class="panel__list-el">
+        <div class="panel__list-el" data-shader=2 data-selectedShader={selectedShader.id === 2 && true}>
           <span />
         </div>
-        <div class="panel__list-el">
+        <div class="panel__list-el" data-shader=3 data-selectedShader={selectedShader.id === 3 && true}>
           <span />
         </div>
-        <div class="panel__list-el">
+        <div class="panel__list-el" data-shader=4 data-selectedShader={selectedShader.id === 4 && true}>
           <span />
         </div>
       </div>
@@ -113,7 +113,7 @@
         <div class="panel__code-block" data-expanded={expandedAccordion===0 && true}>
           <div>
             <pre>
-              <button class="btn-clipboard" on:click={() => copyToClipboard('vertexShader')}/>
+              <button class="btn-clipboard" on:click={() => copyToClipboard('vertexShader')} />
               {selectedShader.vertexShader}
             </pre>
           </div>
