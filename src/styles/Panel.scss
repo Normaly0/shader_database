@@ -1,0 +1,221 @@
+.panel {
+    --bevel: 2.0em;
+    --border-width: .15em;
+
+    position: relative;
+
+    height: 100%;
+    padding: 25px 0;
+
+    clip-path:
+        polygon(0% var(--bevel),
+            var(--bevel) 0%,
+            100% 0,
+            100% calc(100% - var(--bevel)),
+            calc(100% - var(--bevel)) 100%,
+            0 100%);
+
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &::before {
+        background: var(--color-secondary);
+        z-index: -2;
+    }
+
+    &::after {
+        background: var(--color-primary);
+        z-index: -1;
+
+        clip-path:
+            polygon(var(--border-width) calc(var(--bevel) + var(--border-width) * 0.41),
+                calc(var(--bevel) + var(--border-width) * 0.41) var(--border-width),
+                calc(100% - var(--border-width)) var(--border-width),
+                calc(100% - var(--border-width)) calc(100% - calc(var(--bevel) + var(--border-width) * 0.41)),
+                calc(100% - calc(var(--bevel) + var(--border-width) * 0.41)) calc(100% - var(--border-width)),
+                var(--border-width) calc(100% - var(--border-width)));
+    }
+
+    &__list {
+        height: 50%;
+
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+
+        overflow-y: auto;
+
+        //Scrollbars
+        &::-webkit-scrollbar {
+            background: transparent;
+            width: 2px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: var(--color-secondary);
+        }
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--color-secondary) transparent;
+
+        &-el {
+            position: relative;
+
+            width: 100%;
+            aspect-ratio: 1/1;
+
+            background: var(--color-tertiary);
+            border: 1px solid var(--color-secondary);
+
+            clip-path:
+                polygon(0 0,
+                    15% 0,
+                    17% 4%,
+                    38% 4%,
+                    40% 0,
+                    100% 0,
+                    100% 100%,
+                    0 100%);
+
+            &::after,
+            &::before {
+                content: '';
+                position: absolute;
+                inset: 0;
+            }
+
+            &::before {
+                background: var(--color-secondary);
+                z-index: -2;
+            }
+
+            &::after {
+                background: var(--color-tertiary);
+                z-index: -1;
+
+                clip-path:
+                    polygon(0 0,
+                        14% 0,
+                        16% 4%,
+                        38% 4%,
+                        40% 0,
+                        100% 0,
+                        100% 100%,
+                        0 100%);
+            }
+
+            span {
+                display: block;
+                height: 10px;
+                background: var(--color-secondary);
+            }
+        }
+    }
+
+    &__txt {
+        padding: 12.5px 0;
+
+        p:first-of-type {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            line-height: 1.7rem;
+        }
+    }
+
+    &__code {
+        padding-top: 12.5px;
+        border-top: 1px solid var(--color-secondary);
+
+        &-block {
+            display: grid;
+            grid-template-rows: 0fr;
+            transition: grid-template-rows .3s;
+
+            div {
+                overflow: hidden;
+
+                pre {
+                    margin-top: 15px;
+                }
+            }
+        }
+
+        button {
+            margin-top: 15px;
+        }
+    }
+
+    .line-l {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 8px;
+        width: 1px;
+
+        background: var(--color-secondary);
+
+        &:last-of-type {
+            left: 13px;
+        }
+    }
+}
+
+.panel-position {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 53%;
+    left: -280px;
+
+    transition: left .5s;
+
+    width: 300px;
+    height: 80vh;
+}
+
+.panel-scroll {
+    height: 100%;
+    padding: 0 25px;
+
+    overflow-y: auto;
+
+    //Scrollbars
+    &::-webkit-scrollbar {
+        background: transparent;
+        width: 0px; 
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    scrollbar-width: none;
+    scrollbar-color: transparent transparent;
+}
+
+.btn-menu {
+    position: absolute;
+    right: -19%;
+    top: 10%;
+    transform: rotate(-90deg);
+    z-index: -1;
+}
+
+[data-menu="true"] {
+    left: 10px;
+}
+
+[data-expanded="true"] {
+    grid-template-rows: 1fr;
+}
+
+[data-btn-active="true"] {
+    color: var(--color-txt) !important;
+
+    &::after {
+        background-color: var(--color-primary) !important;
+    }
+}

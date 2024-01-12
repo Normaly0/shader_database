@@ -1,0 +1,29 @@
+// CSS variables
+// Define names:
+// For AAA: https://www.color-blindness.com/color-name-hue/
+// For AA: https://chir.ag/projects/name-that-color/
+// ------------------------------------------------------
+:root {
+
+    // Brand color pool
+    --color-black: #000000;
+    --color-white: #ffff;
+    --color-offwhite: #bababa;
+    --color-navy: #0C0151;
+    --color-smalt: #004A92;
+    --color-maya: #59AEFF;
+    --color-gold: #FFD500;
+    --color-gold-light: #FFEA81;
+  
+    // Main element colors
+    --color-background: linear-gradient(var(--color-maya), var(--color-smalt) 80%);
+    --color-primary: var(--color-navy);
+    --color-secondary: var(--color-gold);
+    --color-tertiary: var(--color-smalt);
+    --color-txt: var(--color-white);
+    
+    // Element states
+    // --color-error: var(--color-cinnabar);
+    // --color-success: #21aa14;
+    // --color-warning: #cc752e;
+  }

@@ -1,0 +1,35 @@
+@mixin breakpoint($mq-width) {
+    @media screen and (min-width: $mq-width) {
+        @content;
+    }
+}
+
+@mixin center-img {
+    height: auto;
+    width: 100%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@mixin full-bleed ($color) {
+    
+    position: relative;
+
+    &::after {
+        position: absolute;
+        content: '';
+        width: 100vw;
+        height: 101%;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        top: 50%;
+        background: $color;
+        z-index: -1;
+    }
+}
+
+$breakpoint-mid: 820px;
+$breakpoint-max: 1200px;

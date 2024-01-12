@@ -1,0 +1,114 @@
+@use 'src/styles/helpers/reset.scss';
+@use 'src/styles/variables/colors.scss';
+
+//HTML Elements
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+body {
+    color: var(--color-txt);
+    background: var(--color-background);
+}
+
+pre { 
+    position: relative;
+
+    padding: 15px;
+
+    background: var(--color-tertiary);
+    font-size: 0.8rem;
+    white-space: pre-line;
+
+    clip-path: polygon(
+    0 0,
+    100% 0, 
+    100% calc(100% - 1.5em), 
+    calc(100% - 1.5em) 100%, 
+    0 100%,
+    );
+
+    &::after {
+        content: 'glsl';
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 0.7rem;
+    }
+}
+
+h1 {
+    font-size: 1.8rem;
+    line-height: 2.0rem;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.2rem;
+}
+
+button {
+    position: relative;
+
+    padding: 10px 15px 10px 10px;
+
+    color: var(--color-primary);
+    transition: color .3s;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+
+    clip-path: polygon(
+    0 0,
+    100% 0, 
+    100% calc(100% - .7em), 
+    calc(100% - .7em) 100%, 
+    0 100%,
+    );
+    
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+    &::before {
+        background: var(--color-secondary);
+        z-index: -2;
+    }
+    &::after {
+        --border-width: .05em;
+        
+        background-color: var(--color-secondary);
+        z-index: -1;
+        transition: background-color .3s;
+        
+        clip-path: polygon(
+        var(--border-width) var(--border-width),
+        calc(100% - var(--border-width)) var(--border-width), 
+        calc(100% - var(--border-width)) calc(100% - calc(.7em + var(--border-width) * 0.41)), 
+        calc(100% - calc(.7em + var(--border-width) * 0.41)) calc(100% - var(--border-width)), 
+        var(--border-width) calc(100% - var(--border-width)),
+        );
+    }
+}
+
+//General classes
+
+.webgl {
+    width: 100%;
+    height: 100dvh;
+}
+
+.title {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 20px;
+
+    white-space: nowrap;
+}
