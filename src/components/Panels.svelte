@@ -1,17 +1,19 @@
 <script lang="ts">
 
+
   import type { SvelteComponent } from 'svelte';
+
+  import { type Shader, getShader } from 'src/shaderStore';
   import Toast from 'src/components/Toast.svelte';
 
-  interface Shader {
-    name: string,
-    id: number,
-    desc: string,
-    vertexShader: string,
-    fragmentShader: string
-  }
+  let toastRef : SvelteComponent;
+  let menuRef : HTMLElement;
 
-  const selectedShader : Shader = {
+  let menu : boolean = false;
+  let expandedAccordion : boolean | number = false;
+
+  let shaderID : number = 0;
+  let selectedShader : Shader = {
     name: 'Dot grid shader',
     id: 0,
     desc: 'Lalalala',
@@ -38,24 +40,11 @@
     }`
   }
 
-  let toastRef : SvelteComponent;
-  let menuRef : HTMLElement;
-
-  let expandedAccordion : boolean | number = false;
-  let menu : boolean = false;
-
   $: if (!menu) {
     expandedAccordion = false;
   }
 
-  function handleAccordion(id:number) {
-    expandedAccordion === id
-    ? expandedAccordion = false
-    : expandedAccordion = id;
-  }
-
   function handleMenu() {
-
     if (!menu) {
       window.addEventListener('click', autoCloseMenu);
     } else {
@@ -70,6 +59,22 @@
     handleMenu();
   }
 
+  function selectShader(e: MouseEvent) {
+    
+    const id = (e.target as HTMLButtonElement).dataset.id;
+    const newShader = getShader(shaderID);
+
+    shaderID = parseInt(id!);
+    selectedShader = newShader;
+
+  }
+
+  function handleAccordion(id:number) {
+    expandedAccordion === id
+    ? expandedAccordion = false
+    : expandedAccordion = id;
+  }
+
   function copyToClipboard(shader : string) {
     navigator.clipboard.writeText(selectedShader[shader as keyof Shader] as string);
     toastRef.showToast();
@@ -82,25 +87,25 @@
     <div class="panel-scroll">
 
       <div class="panel__list">
-        <div class="panel__list-el" data-shader=0 data-selectedShader={selectedShader.id === 0 && true}>
+        <button class="panel__list-el" data-id=0 data-selectedShader={shaderID === 0 && true} on:click={selectShader}>
           <span />
-        </div>
-        <div class="panel__list-el" data-shader=1 data-selectedShader={selectedShader.id === 1 && true}>
+        </button>
+        <button class="panel__list-el" data-id=1 data-selectedShader={shaderID === 1 && true} on:click={selectShader}>
           <span />
-        </div>
-        <div class="panel__list-el" data-shader=2 data-selectedShader={selectedShader.id === 2 && true}>
+        </button>
+        <button class="panel__list-el" data-id=2 data-selectedShader={shaderID === 2 && true} on:click={selectShader}>
           <span />
-        </div>
-        <div class="panel__list-el" data-shader=3 data-selectedShader={selectedShader.id === 3 && true}>
+        </button>
+        <button class="panel__list-el" data-id=3 data-selectedShader={shaderID === 3 && true} on:click={selectShader}>
           <span />
-        </div>
-        <div class="panel__list-el" data-shader=4 data-selectedShader={selectedShader.id === 4 && true}>
+        </button>
+        <button class="panel__list-el" data-id=4 data-selectedShader={shaderID === 4 && true} on:click={selectShader}>
           <span />
-        </div>
+        </button>
       </div>
 
       <div class="panel__txt">
-        <p>Comic dot shader</p>
+        <p>{selectedShader.name}</p>
         <p>for the container but still ensure that the child element takes up 50% of the height, you need to ensure that
           the parent has a height value to base the percentage calculation on.
         </p>
