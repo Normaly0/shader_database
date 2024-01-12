@@ -1,5 +1,8 @@
 <script lang="ts">
 
+  import type { SvelteComponent } from 'svelte';
+  import Toast from 'src/components/Toast.svelte';
+
   interface Shader {
     name: string,
     id: number,
@@ -35,9 +38,15 @@
     }`
   }
 
+  let toastRef : SvelteComponent;
   let menuRef : HTMLElement;
+
   let expandedAccordion : boolean | number = false;
   let menu : boolean = false;
+
+  $: if (!menu) {
+    expandedAccordion = false;
+  }
 
   function handleAccordion(id:number) {
     expandedAccordion === id
@@ -59,6 +68,11 @@
   function autoCloseMenu(e : MouseEvent) {
     if (menuRef.contains(e.target as HTMLElement)) return
     handleMenu();
+  }
+
+  function copyToClipboard(shader : string) {
+    navigator.clipboard.writeText(selectedShader[shader as keyof Shader] as string);
+    toastRef.showToast();
   }
 
 </script>
@@ -99,6 +113,7 @@
         <div class="panel__code-block" data-expanded={expandedAccordion===0 && true}>
           <div>
             <pre>
+              <button class="btn-clipboard" on:click={() => copyToClipboard('vertexShader')}/>
               {selectedShader.vertexShader}
             </pre>
           </div>
@@ -108,6 +123,7 @@
         <div class="panel__code-block" data-expanded={expandedAccordion===1 && true}>
           <div>
             <pre>
+              <button class="btn-clipboard" on:click={() => copyToClipboard('fragmentShader')}/>
               {selectedShader.fragmentShader}
             </pre>
           </div>
@@ -121,6 +137,8 @@
   </div>
   <button class="btn-menu" on:click={handleMenu} data-btn-active={menu}>Database</button>
 </div>
+
+<Toast bind:this={toastRef}/>
 
 
 <style lang="scss">

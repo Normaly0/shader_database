@@ -1,3 +1,5 @@
+@use 'src/styles/helpers/utilities.scss' as *;
+
 .panel {
     --bevel: 2.0em;
     --border-width: .15em;
@@ -7,20 +9,7 @@
     height: 100%;
     padding: 25px 0;
 
-    clip-path:
-        polygon(0% var(--bevel),
-            var(--bevel) 0%,
-            100% 0,
-            100% calc(100% - var(--bevel)),
-            calc(100% - var(--bevel)) 100%,
-            0 100%);
-
-    &::before,
-    &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-    }
+    @include bevel-tl-br(var(--bevel), var(--border-width));
 
     &::before {
         background: var(--color-secondary);
@@ -29,15 +18,6 @@
 
     &::after {
         background: var(--color-primary);
-        z-index: -1;
-
-        clip-path:
-            polygon(var(--border-width) calc(var(--bevel) + var(--border-width) * 0.41),
-                calc(var(--bevel) + var(--border-width) * 0.41) var(--border-width),
-                calc(100% - var(--border-width)) var(--border-width),
-                calc(100% - var(--border-width)) calc(100% - calc(var(--bevel) + var(--border-width) * 0.41)),
-                calc(100% - calc(var(--bevel) + var(--border-width) * 0.41)) calc(100% - var(--border-width)),
-                var(--border-width) calc(100% - var(--border-width)));
     }
 
     &__list {
@@ -197,11 +177,17 @@
 }
 
 .btn-menu {
+    --bevel: .7em;
+    --border-width: .15em;
+
+    width: 100px;
     position: absolute;
-    right: -19%;
+    right: -22%;
     top: 10%;
     transform: rotate(-90deg);
     z-index: -1;
+
+    @include bevel-br(var(--bevel), var(--border-width));
 }
 
 [data-menu="true"] {
@@ -210,12 +196,4 @@
 
 [data-expanded="true"] {
     grid-template-rows: 1fr;
-}
-
-[data-btn-active="true"] {
-    color: var(--color-txt) !important;
-
-    &::after {
-        background-color: var(--color-primary) !important;
-    }
 }

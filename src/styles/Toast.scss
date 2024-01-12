@@ -1,0 +1,33 @@
+@use 'src/styles/helpers/utilities.scss' as *;
+
+.toast {
+    --bevel: .8em;
+    --border-width: .05em;
+
+    position: fixed;
+    transform: translateX(-50%);
+    bottom: -60px;
+    left: 50%;
+
+    padding: 10px 15px;
+
+    transition: bottom .5s;
+
+    @include bevel-tl-br(var(--bevel), var(--border-width));
+
+    &::before {
+        background-color: var(--color-secondary);
+    }
+    &::after {
+        background-color: var(--color-primary);
+    }
+
+    p {
+        font-size: 0.9rem;
+        line-height: 1.1rem;
+    }
+}
+
+[data-toast="true"] {
+    bottom: 5px !important;
+}

@@ -1,6 +1,8 @@
 @use 'src/styles/helpers/reset.scss';
 @use 'src/styles/variables/colors.scss';
 
+@use 'src/styles/helpers/utilities.scss' as *;
+
 //HTML Elements
 
 *, *::after, *::before {
@@ -18,6 +20,8 @@ body {
 }
 
 pre { 
+    --bevel: 1.5em;
+
     position: relative;
 
     padding: 15px;
@@ -29,8 +33,8 @@ pre {
     clip-path: polygon(
     0 0,
     100% 0, 
-    100% calc(100% - 1.5em), 
-    calc(100% - 1.5em) 100%, 
+    100% calc(100% - var(--bevel)), 
+    calc(100% - var(--bevel)) 100%,
     0 100%,
     );
 
@@ -38,7 +42,7 @@ pre {
         content: 'glsl';
         position: absolute;
         top: 10px;
-        right: 10px;
+        right: 40px;
         font-size: 0.7rem;
     }
 }
@@ -54,6 +58,9 @@ p {
 }
 
 button {
+    --bevel: .7em;
+    --border-width: .05em;
+    
     position: relative;
 
     padding: 10px 15px 10px 10px;
@@ -63,37 +70,22 @@ button {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
 
-    clip-path: polygon(
-    0 0,
-    100% 0, 
-    100% calc(100% - .7em), 
-    calc(100% - .7em) 100%, 
-    0 100%,
-    );
-    
-    &::before, &::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-    }
+    @include bevel-br(var(--bevel), var(--border-width));
+
     &::before {
-        background: var(--color-secondary);
-        z-index: -2;
-    }
-    &::after {
-        --border-width: .05em;
-        
         background-color: var(--color-secondary);
-        z-index: -1;
-        transition: background-color .3s;
-        
-        clip-path: polygon(
-        var(--border-width) var(--border-width),
-        calc(100% - var(--border-width)) var(--border-width), 
-        calc(100% - var(--border-width)) calc(100% - calc(.7em + var(--border-width) * 0.41)), 
-        calc(100% - calc(.7em + var(--border-width) * 0.41)) calc(100% - var(--border-width)), 
-        var(--border-width) calc(100% - var(--border-width)),
-        );
+    }
+
+    &::after {
+        background-color: var(--color-secondary);
+    }
+}
+
+[data-btn-active="true"] {
+    color: var(--color-txt) !important;
+
+    &::after {
+        background-color: var(--color-primary) !important;
     }
 }
 
@@ -111,4 +103,23 @@ button {
     top: 20px;
 
     white-space: nowrap;
+}
+
+.btn-clipboard {
+    clip-path: none;
+    position: absolute;
+    top: -10px;
+    right: 10px;
+
+    width: 20px;
+    height: 30px;
+
+    margin: 0;
+    padding: 0;
+
+    background: url(clipboard.svg) center/100% no-repeat;
+
+    &::after, &::before {
+        content: none;
+    }
 }

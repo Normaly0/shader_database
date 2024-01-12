@@ -33,3 +33,75 @@
 
 $breakpoint-mid: 820px;
 $breakpoint-max: 1200px;
+
+@mixin bevel-br($bevel, $borderWidth) {
+
+    isolation: isolate;
+
+    clip-path: polygon(
+    0 0,
+    100% 0, 
+    100% calc(100% - $bevel), 
+    calc(100% - $bevel) 100%, 
+    0 100%,
+    );
+
+    &::after, &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &::before {
+        z-index: -2;
+    }
+
+    &::after {
+        z-index: -1;
+        
+        clip-path: polygon(
+        $borderWidth $borderWidth,
+        calc(100% - $borderWidth) $borderWidth, 
+        calc(100% - $borderWidth) calc(100% - calc($bevel + $borderWidth * 0.41)), 
+        calc(100% - calc($bevel + $borderWidth * 0.41)) calc(100% - $borderWidth), 
+        $borderWidth calc(100% - $borderWidth),
+        );
+    }
+}
+
+@mixin bevel-tl-br($bevel, $borderWidth) {
+    
+    isolation: isolate;
+
+    clip-path:polygon(
+        0% $bevel,
+        $bevel 0%,
+        100% 0,
+        100% calc(100% - $bevel),
+        calc(100% - $bevel) 100%,
+        0 100%
+    );
+
+    &::after, &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+    }
+
+    &::before {
+        z-index: -2;
+    }
+
+    &::after {
+        z-index: -1;
+        
+        clip-path:polygon(
+            $borderWidth calc($bevel + $borderWidth * 0.41),
+            calc($bevel + $borderWidth * 0.41) $borderWidth,
+            calc(100% - $borderWidth) $borderWidth,
+            calc(100% - $borderWidth) calc(100% - calc($bevel + $borderWidth * 0.41)),
+            calc(100% - calc($bevel + $borderWidth * 0.41)) calc(100% - $borderWidth),
+            $borderWidth calc(100% - $borderWidth)
+        );
+    }
+}
