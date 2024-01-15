@@ -22,6 +22,7 @@
 body {
     color: var(--color-txt);
     background: var(--color-background);
+    overflow: clip;
 }
 
 pre { 
