@@ -4,7 +4,7 @@
 
   import { get } from 'svelte/store';
   import { type Shader, shaders, shaderID } from 'src/shaderStore';
-  
+
   import Toast from 'src/components/Toast.svelte';
 
   let toastRef : SvelteComponent;
@@ -75,6 +75,9 @@
           <span />
         </button>
         <button class="panel__list-el" data-id=4 data-selectedShader={$shaderID === 4 && true} on:click={selectShader}>
+          <span />
+        </button>
+        <button class="panel__list-el" data-id=5 data-selectedShader={$shaderID === 5 && true} on:click={selectShader}>
           <span />
         </button>
       </div>

@@ -6,6 +6,10 @@
     import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
+    import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+    import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+    import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+
     import fakeLightVertex from 'src/shaders/fake_light/vertexShader.glsl';
     import fakeLightFragment from 'src/shaders/fake_light/fragmentShader.glsl';
 
@@ -15,17 +19,38 @@
     import stripesVertex from 'src/shaders/emissive_stripes/vertexShader.glsl';
     import stripesFragment from 'src/shaders/emissive_stripes/fragmentShader.glsl';
 
+    import dotShadingVertex from 'src/shaders/dot_shading/vertexShader.glsl';
+    import dotShadingFragment from 'src/shaders/dot_shading/fragmentShader.glsl';
+
+    import scribleVertex from 'src/shaders/scrible_shading/vertexShader.glsl';
+    import scribleFragment from 'src/shaders/scrible_shading/fragmentShader.glsl';
+
+    import energyBubbleVertex from 'src/shaders/energy_bubble/vertexShader.glsl';
+    import energyBubbleFragment from 'src/shaders/energy_bubble/fragmentShader.glsl';
+
     const shaderParts = [
         [fakeLightVertex, fakeLightFragment],
         [toonLightVertex, toonLightFragment],
-        [stripesVertex, stripesFragment]
-    ]
+        [stripesVertex, stripesFragment],
+        [dotShadingVertex, dotShadingFragment],
+        [scribleVertex, scribleFragment],
+        [energyBubbleVertex, energyBubbleFragment],
+    ];
 
     let canvasRef : HTMLCanvasElement;
 
     //Scene
 
     const scene = new THREE.Scene();
+    $: switch($shaderID) {
+        case 2:
+        case 5:
+            scene.background = new THREE.Color('#59AEFF');
+            break;
+        default: 
+            scene.background = null;
+            break;
+    }
     
     //Sizes
 
@@ -58,9 +83,11 @@
 
     const cubeGeometry = new THREE.SphereGeometry(1);
     const dynamicMaterial = new THREE.ShaderMaterial({
+        transparent: true,
         uniforms: {
             uColor1: { value: new THREE.Color('#a56b7a') },
             uColor2: { value: new THREE.Color('#ffaad1') },
+            uCameraPosition: { value: camera.position }
         }
     })
     $: {
@@ -89,6 +116,36 @@
         renderer.render(scene, camera);
     })
 
+    //Post proccessing
+    
+    let effectComposer : any;
+    const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(sizes.width, sizes.height),
+        0.7,
+        0.5,
+        0.85
+    )
+
+    onMount(() => {
+        effectComposer = new EffectComposer(renderer);
+        const renderPass = new RenderPass(scene, camera);
+        effectComposer.addPass(renderPass);
+    });
+
+    
+    $: if (effectComposer) {
+        switch($shaderID) {
+            case 2:
+            case 5:
+            if (effectComposer.passes.includes(bloomPass)) break;
+            effectComposer.addPass(bloomPass);
+            break;
+        default:
+            effectComposer.removePass(bloomPass);
+            break;
+        }
+    }
+
     //Controls
     
     let controls : any;
@@ -112,7 +169,8 @@
 
         //Render
 
-        renderer.render(scene, camera);
+        // renderer.render(scene, camera);
+        effectComposer.render()
 
         //Repeat
 
