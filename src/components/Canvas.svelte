@@ -5,6 +5,8 @@
 
     import * as THREE from 'three';
     import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 
     import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
     import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
@@ -81,7 +83,46 @@
 
     //Models
 
-    const cubeGeometry = new THREE.SphereGeometry(1);
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath('/draco/');
+
+    const loader = new GLTFLoader();
+    loader.dracoLoader = dracoLoader;
+
+    function createOutline(model : THREE.Mesh, color : THREE.Vector3) {
+        
+        const outline = model.clone();
+        
+        outline.material = new THREE.ShaderMaterial({
+            vertexShader: `
+              void main() {
+                vec3 outlinePosition = position + normal * 0.005;
+                gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(outlinePosition, 1.0);
+              }
+            `,
+            fragmentShader: `
+              void main() {
+                gl_FragColor = vec4(${color.x}, ${color.y}, ${color.z}, 1.0);
+              }
+            `,
+            side: THREE.BackSide
+        })
+
+        return outline;
+    }
+
+    let sphere : THREE.Mesh;
+    let outline : THREE.Mesh;
+
+    loader.load('sphere.glb', (gltf) => {
+        sphere = gltf.scene.children[0] as THREE.Mesh;
+        sphere.material = dynamicMaterial;
+
+        outline = createOutline(sphere, new THREE.Vector3(0.0));
+
+        scene.add(sphere);
+    })
+
     const dynamicMaterial = new THREE.ShaderMaterial({
         transparent: true,
         uniforms: {
@@ -90,18 +131,22 @@
             uCameraPosition: { value: camera.position }
         }
     })
+
     $: {
         dynamicMaterial.vertexShader = shaderParts[$shaderID][0];
         dynamicMaterial.fragmentShader = shaderParts[$shaderID][1];
         dynamicMaterial.needsUpdate = true;
     }
 
-    const cube = new THREE.Mesh(
-        cubeGeometry,
-        dynamicMaterial
-    );
-
-    scene.add(cube);
+    $: switch($shaderID) {
+        case 5:
+            scene.remove(outline);
+            break;
+        default:
+            if (!outline) break;
+            scene.add(outline);
+            break;
+    }
 
     //Renderer
 
