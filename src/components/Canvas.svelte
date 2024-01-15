@@ -1,5 +1,6 @@
 <script lang="ts">
 
+    import { onMount } from 'svelte';
     import { shaderID } from 'src/shaderStore';
 
     import * as THREE from 'three';
@@ -11,12 +12,16 @@
     import toonLightVertex from 'src/shaders/toon_light/vertexShader.glsl';
     import toonLightFragment from 'src/shaders/toon_light/fragmentShader.glsl';
 
+    import stripesVertex from 'src/shaders/emissive_stripes/vertexShader.glsl';
+    import stripesFragment from 'src/shaders/emissive_stripes/fragmentShader.glsl';
+
     const shaderParts = [
         [fakeLightVertex, fakeLightFragment],
-        [toonLightVertex, toonLightFragment]
+        [toonLightVertex, toonLightFragment],
+        [stripesVertex, stripesFragment]
     ]
 
-    let canvasRef : HTMLElement;
+    let canvasRef : HTMLCanvasElement;
 
     //Scene
 
@@ -75,23 +80,23 @@
 
     let renderer : any;
 
-    $: if (canvasRef) {
-        renderer = new THREE.WebGLRenderer({canvas: canvasRef!, alpha: true});
-
+    onMount(() => {
+        renderer = new THREE.WebGLRenderer({canvas: canvasRef, alpha: true});
+    
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     
         renderer.render(scene, camera);
-    };
+    })
 
     //Controls
     
     let controls : any;
 
-    $: if(canvasRef) {
+    onMount(() => {
         controls = new OrbitControls(camera, canvasRef);
         controls.enableDamping = true;
-    }
+    })
 
     //Animation
 
@@ -115,10 +120,9 @@
 
     }
 
-    $: if (renderer) {
+    onMount(() => {
         tick();
-    }
-
+    })
 
 </script>
 
