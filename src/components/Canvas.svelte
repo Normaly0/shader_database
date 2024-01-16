@@ -40,6 +40,7 @@
     ];
 
     let canvasRef : HTMLCanvasElement;
+    export let focusedModel = 1;
 
     //Scene
 
@@ -111,17 +112,47 @@
         return outline;
     }
 
+    let modelsGroup = new THREE.Group();
+    let outlineGroup = new THREE.Group();
+    
     let sphere : THREE.Mesh;
-    let outline : THREE.Mesh;
-
     loader.load('sphere.glb', (gltf) => {
         sphere = gltf.scene.children[0] as THREE.Mesh;
         sphere.material = dynamicMaterial;
 
-        outline = createOutline(sphere, new THREE.Vector3(0.0));
+        const outline = createOutline(sphere, new THREE.Vector3(0.0));
+        outlineGroup.add(outline);
 
-        scene.add(sphere);
+        modelsGroup.add(sphere);
     })
+
+    let machine : THREE.Mesh;
+    loader.load('machine.glb', (gltf) => {
+        machine = gltf.scene.children[0] as THREE.Mesh;
+        machine.material = dynamicMaterial;
+        machine.position.x = -5;
+        machine.position.y = 0;
+
+        const outline = createOutline(machine, new THREE.Vector3(0.0));
+        outlineGroup.add(outline);
+
+        modelsGroup.add(machine);
+    })
+
+    let piston : THREE.Mesh;
+    loader.load('piston.glb', (gltf) => {
+        piston = gltf.scene.children[0] as THREE.Mesh;
+        piston.material = dynamicMaterial;
+        piston.position.x = 5;
+        piston.position.y = 0;
+
+        const outline = createOutline(piston, new THREE.Vector3(0.0));
+        outlineGroup.add(outline);
+
+        modelsGroup.add(piston);
+    })
+
+    scene.add(modelsGroup);
 
     const dynamicMaterial = new THREE.ShaderMaterial({
         transparent: true,
@@ -140,11 +171,11 @@
 
     $: switch($shaderID) {
         case 5:
-            scene.remove(outline);
+            scene.remove(outlineGroup)
             break;
         default:
-            if (!outline) break;
-            scene.add(outline);
+            if (outlineGroup.parent === scene) break;
+            scene.add(outlineGroup);
             break;
     }
 
@@ -217,6 +248,9 @@
         // renderer.render(scene, camera);
         effectComposer.render()
 
+        //Animate camera
+        focusModel(focusedModel);
+
         //Repeat
 
         window.requestAnimationFrame(tick);
@@ -226,6 +260,17 @@
     onMount(() => {
         tick();
     })
+
+    function focusModel(x : number) {
+        const pos = [
+            5,
+            0,
+            -5
+        ];
+        
+        modelsGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
+        outlineGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
+    }
 
 </script>
 

@@ -135,3 +135,17 @@ button {
         content: none;
     }
 }
+
+.btn-next, .btn-prev {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 90%;
+}
+
+.btn-next {
+    right: 50px;
+}
+
+.btn-prev {
+    left: 50px;
+}
