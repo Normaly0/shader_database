@@ -140,12 +140,43 @@ button {
     position: absolute;
     transform: translateY(-50%);
     top: 90%;
+
+    &::before {
+        background-color: var(--color-primary);
+    }
+
+    @include breakpoint($breakpoint-mid) {
+        font-size: 1.1rem;
+    }
 }
 
 .btn-next {
     right: 50px;
+
+    @include breakpoint($breakpoint-mid) {
+        right: 35%;
+    }
 }
 
 .btn-prev {
     left: 50px;
+
+    @include breakpoint($breakpoint-mid) {
+        left: 35%;
+    }
+}
+
+.btn-spin {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 90%;
+    left: 50%;
+
+    &::before {
+        background-color: var(--color-primary);
+    }
+
+    @include breakpoint($breakpoint-mid) {
+        font-size: 1.1rem;
+    }
 }

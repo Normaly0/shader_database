@@ -6,6 +6,7 @@
   import Canvas from 'src/components/Canvas.svelte';
 
   let focusedModel = 1;
+  let rotateModels = false;
 
   function focusModel(v : number) {
     focusedModel = Math.min(Math.max(focusedModel + v, 0), 2);;
@@ -21,10 +22,11 @@
 
   <Panel />
   
-  <Canvas focusedModel={focusedModel} />
+  <Canvas focusedModel={focusedModel} rotateModels={rotateModels} />
 
   <button on:click={() => focusModel(1)} class="btn-next">Next</button>
   <button on:click={() => focusModel(-1)} class="btn-prev">Prev</button>
+  <button on:click={() => rotateModels = !rotateModels} class="btn-spin">SPIN!</button>
 
 </main>
 

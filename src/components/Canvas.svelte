@@ -41,6 +41,7 @@
 
     let canvasRef : HTMLCanvasElement;
     export let focusedModel = 1;
+    export let rotateModels = false;
 
     //Scene
 
@@ -248,8 +249,9 @@
         // renderer.render(scene, camera);
         effectComposer.render()
 
-        //Animate camera
+        //Animate models
         focusModel(focusedModel);
+        animateModelRotation(elapsedTime);
 
         //Repeat
 
@@ -270,6 +272,17 @@
         
         modelsGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
         outlineGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
+    }
+
+    function animateModelRotation(delta : number) {
+        if (!rotateModels) return
+
+        modelsGroup.children.map((model) => {
+            model.rotation.y = Math.PI * (delta * 0.15);
+        })
+        outlineGroup.children.map((model) => {
+            model.rotation.y = Math.PI * (delta * 0.15);
+        })
     }
 
 </script>

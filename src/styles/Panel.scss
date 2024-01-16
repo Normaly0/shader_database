@@ -170,6 +170,8 @@
     height: 80vh;
     max-height: 700px;
 
+    z-index: 1;
+
     @include breakpoint($breakpoint-mid) {
         width: 500px;
         left: -470px;
