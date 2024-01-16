@@ -107,6 +107,13 @@
                 background-color: var(--color-secondary);
                 transition: background-color .3s;
             }
+
+            img {
+                @include center-img;
+                width: 80%;
+                top: 53%;
+                pointer-events: none;
+            }
         }
     }
 

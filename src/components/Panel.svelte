@@ -63,21 +63,27 @@
 
       <div class="panel__list">
         <button class="panel__list-el" data-id=0 data-selectedShader={$shaderID === 0 && true} on:click={selectShader}>
+          <img src="fake_light_preview.png" alt="" />
           <span />
         </button>
         <button class="panel__list-el" data-id=1 data-selectedShader={$shaderID === 1 && true} on:click={selectShader}>
+          <img src="toon_light_preview.png" alt="" />
           <span />
         </button>
         <button class="panel__list-el" data-id=2 data-selectedShader={$shaderID === 2 && true} on:click={selectShader}>
+          <img src="emissive_stripes_preview.png" alt="" />
           <span />
         </button>
         <button class="panel__list-el" data-id=3 data-selectedShader={$shaderID === 3 && true} on:click={selectShader}>
+          <img src="dot_shading_preview.png" alt="" />
           <span />
         </button>
         <button class="panel__list-el" data-id=4 data-selectedShader={$shaderID === 4 && true} on:click={selectShader}>
+          <img src="scribbles_preview.png" alt="" />
           <span />
         </button>
         <button class="panel__list-el" data-id=5 data-selectedShader={$shaderID === 5 && true} on:click={selectShader}>
+          <img src="energy_bubble_preview.png" alt="" />
           <span />
         </button>
       </div>
