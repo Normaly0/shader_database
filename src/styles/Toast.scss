@@ -30,4 +30,8 @@
 
 [data-toast="true"] {
     bottom: 5px !important;
+
+    @include breakpoint($breakpoint-mid) {
+        bottom: 11px !important;
+    }
 }

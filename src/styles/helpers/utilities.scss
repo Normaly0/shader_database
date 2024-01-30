@@ -1,3 +1,6 @@
+$breakpoint-mid: 820px;
+$breakpoint-max: 1200px;
+
 @mixin breakpoint($mq-width) {
     @media screen and (min-width: $mq-width) {
         @content;
@@ -31,9 +34,6 @@
     }
 }
 
-$breakpoint-mid: 820px;
-$breakpoint-max: 1200px;
-
 @mixin bevel-br($bevel, $borderWidth) {
 
     isolation: isolate;
@@ -50,6 +50,7 @@ $breakpoint-max: 1200px;
         content: '';
         position: absolute;
         inset: 0;
+        transition: background-color .3s;
     }
 
     &::before {
@@ -86,6 +87,7 @@ $breakpoint-max: 1200px;
         content: '';
         position: absolute;
         inset: 0;
+        transition: background-color .3s;
     }
 
     &::before {

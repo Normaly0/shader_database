@@ -152,6 +152,7 @@
         piston = gltf.scene.children[0] as THREE.Mesh;
         piston.material = dynamicMaterial;
         piston.position.y = 0;
+        piston.scale.set(1.2, 1.2, 1.2);
 
         const outline = createOutline(piston, new THREE.Vector3(0.0));
         outlineGroup.add(outline);

@@ -55,12 +55,12 @@ pre {
 }
 
 h1 {
-    font-size: 1.8rem;
-    line-height: 2.0rem;
+    font-size: 2rem;
+    line-height: 2.3rem;
 
     @include breakpoint($breakpoint-mid) {
-        font-size: 2.5rem;
-        line-height: 2.8rem;
+        font-size: 3rem;
+        line-height: 3.5rem;
     }
 }
 
@@ -83,6 +83,10 @@ button {
     -webkit-tap-highlight-color: transparent;
 
     @include bevel-br(var(--bevel), var(--border-width));
+
+    @include breakpoint($breakpoint-mid) {
+        padding: 10px 25px 10px 15px;
+    }
 
     &::before {
         background-color: var(--color-secondary);
@@ -112,9 +116,13 @@ button {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
-    top: 20px;
+    top: 30px;
 
     white-space: nowrap;
+
+    @include breakpoint($breakpoint-mid) {
+        top: 60px;
+    }
 }
 
 .btn-clipboard {
@@ -146,7 +154,7 @@ button {
     }
 
     @include breakpoint($breakpoint-mid) {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
     }
 }
 
@@ -154,6 +162,10 @@ button {
     right: 50px;
 
     @include breakpoint($breakpoint-mid) {
+        right: 30%;
+    }
+
+    @include breakpoint($breakpoint-max) {
         right: 35%;
     }
 }
@@ -162,6 +174,9 @@ button {
     left: 50px;
 
     @include breakpoint($breakpoint-mid) {
+        left: 30%;
+    }
+    @include breakpoint($breakpoint-max) {
         left: 35%;
     }
 }
@@ -177,6 +192,19 @@ button {
     }
 
     @include breakpoint($breakpoint-mid) {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
+    }
+}
+
+.btn-spin--active {
+    
+    color: var(--color-txt);
+    
+    &::before {
+        background-color: var(--color-secondary);
+    }
+
+    &::after {
+        background-color: var(--color-primary);
     }
 }

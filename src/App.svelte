@@ -22,7 +22,7 @@
 
   <button on:click={() => currentRotation++} class="btn-next">Next</button>
   <button on:click={() => currentRotation--} class="btn-prev">Prev</button>
-  <button on:click={() => rotateModels = !rotateModels} class="btn-spin">SPIN!</button>
+  <button on:click={() => rotateModels = !rotateModels} class={`btn-spin ${rotateModels && 'btn-spin--active'}`}>SPIN!</button>
 
 </main>
 
