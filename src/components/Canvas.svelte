@@ -40,7 +40,8 @@
     ];
 
     let canvasRef : HTMLCanvasElement;
-    export let focusedModel = 1;
+
+    export let currentRotation : number;
     export let rotateModels = false;
 
     //Scene
@@ -80,7 +81,7 @@
     //Camera
 
     const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-    camera.position.z = 3;
+    camera.position.z = 3.5;
     scene.add(camera);
 
     //Models
@@ -115,11 +116,18 @@
 
     let modelsGroup = new THREE.Group();
     let outlineGroup = new THREE.Group();
+
+    const radius = 3;
+
+    modelsGroup.position.z = 0 - radius;
+    outlineGroup.position.z = 0 - radius;
+ 
     
     let sphere : THREE.Mesh;
     loader.load('sphere.glb', (gltf) => {
         sphere = gltf.scene.children[0] as THREE.Mesh;
         sphere.material = dynamicMaterial;
+        sphere.position.y = 0;
 
         const outline = createOutline(sphere, new THREE.Vector3(0.0));
         outlineGroup.add(outline);
@@ -131,7 +139,6 @@
     loader.load('machine.glb', (gltf) => {
         machine = gltf.scene.children[0] as THREE.Mesh;
         machine.material = dynamicMaterial;
-        machine.position.x = -5;
         machine.position.y = 0;
 
         const outline = createOutline(machine, new THREE.Vector3(0.0));
@@ -144,7 +151,6 @@
     loader.load('piston.glb', (gltf) => {
         piston = gltf.scene.children[0] as THREE.Mesh;
         piston.material = dynamicMaterial;
-        piston.position.x = 5;
         piston.position.y = 0;
 
         const outline = createOutline(piston, new THREE.Vector3(0.0));
@@ -250,8 +256,8 @@
         effectComposer.render()
 
         //Animate models
-        focusModel(focusedModel);
         animateModelRotation(elapsedTime);
+        changeModelFocus(currentRotation);
 
         //Repeat
 
@@ -263,16 +269,44 @@
         tick();
     })
 
-    function focusModel(x : number) {
-        const pos = [
-            5,
-            0,
-            -5
-        ];
-        
-        modelsGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
-        outlineGroup.position.lerp(new THREE.Vector3(pos[x], 0, 0), 0.1);
+
+    function changeModelFocus(rotation : number) {
+
+        if (!machine) return
+
+        let i = 0;
+
+        modelsGroup.traverse((el) => {
+
+            if (el.type === 'Group') return
+
+            el.position.lerp(new THREE.Vector3(
+            Math.cos((rotation + i) / 3 * Math.PI * 2 - .55) * radius,
+            0.0, 
+            Math.sin((rotation + i) / 3 * Math.PI * 2 - .55) * radius
+            ), .1)
+
+            i++;
+
+        })
+
+        outlineGroup.traverse((el) => {
+
+            if (el.type === 'Group') return
+
+            el.position.lerp(new THREE.Vector3(
+            Math.cos((rotation + i) / 3 * Math.PI * 2 - .55) * radius,
+            0.0, 
+            Math.sin((rotation + i) / 3 * Math.PI * 2 - .55) * radius
+            ), .1)
+
+            i++;
+
+        })
     }
+
+    console.log(modelsGroup.children);
+    
 
     function animateModelRotation(delta : number) {
         if (!rotateModels) return
