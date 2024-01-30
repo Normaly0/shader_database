@@ -20,6 +20,7 @@
 }
 
 body {
+    height: 100dvh;
     color: var(--color-txt);
     background: var(--color-background);
     overflow: clip;
@@ -108,103 +109,70 @@ button {
 //General classes
 
 .webgl {
+    position: fixed;
+    // z-index: -1;
     width: 100%;
     height: 100dvh;
 }
 
-.title {
-    position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
-    top: 30px;
+//UI
 
-    white-space: nowrap;
-
-    @include breakpoint($breakpoint-mid) {
-        top: 60px;
-    }
-}
-
-.btn-clipboard {
-    clip-path: none;
-    position: absolute;
-    top: -10px;
-    right: 10px;
-
-    width: 20px;
-    height: 30px;
-
-    margin: 0;
-    padding: 0;
-
-    background: url(/clipboard.svg) center/100% no-repeat;
-
-    &::after, &::before {
-        content: none;
-    }
-}
-
-.btn-next, .btn-prev {
-    position: absolute;
-    transform: translateY(-50%);
-    top: 90%;
-
-    &::before {
-        background-color: var(--color-primary);
-    }
-
-    @include breakpoint($breakpoint-mid) {
-        font-size: 1.3rem;
-    }
-}
-
-.btn-next {
-    right: 50px;
-
-    @include breakpoint($breakpoint-mid) {
-        right: 30%;
-    }
-
-    @include breakpoint($breakpoint-max) {
-        right: 35%;
-    }
-}
-
-.btn-prev {
-    left: 50px;
-
-    @include breakpoint($breakpoint-mid) {
-        left: 30%;
-    }
-    @include breakpoint($breakpoint-max) {
-        left: 35%;
-    }
-}
-
-.btn-spin {
+.posX {
     position: absolute;
     transform: translate(-50%, -50%);
-    top: 90%;
+    bottom: 5px;
     left: 50%;
 
-    &::before {
-        background-color: var(--color-primary);
-    }
+    width: 100px;
+    
+    text-align: center;
+    font-size: .9rem;
+    
+    z-index: 1;
+    visibility: hidden; 
 
     @include breakpoint($breakpoint-mid) {
-        font-size: 1.3rem;
-    }
-}
-
-.btn-spin--active {
-    
-    color: var(--color-txt);
-    
-    &::before {
-        background-color: var(--color-secondary);
+        visibility: visible;
     }
 
     &::after {
-        background-color: var(--color-primary);
+        content: '';
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        bottom: 0;
+        width: 105%;
+        height: 1px;
+        background: var(--color-secondary);
+    }
+}
+
+.posY {
+    position: absolute;
+    transform: translate(-50%, -50%) rotate(-90deg);
+    right: -70px;
+    top: 50%;
+
+    width: 100px;
+    
+    text-align: center;
+    font-size: .9rem;
+
+    z-index: 1;
+    visibility: hidden;
+
+    @include breakpoint($breakpoint-mid) {
+        visibility: visible;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        transform: translate(-50%, -50%);
+        left: 50%;
+        bottom: 0;
+        width: 105%;
+        height: 1px;
+        background: var(--color-secondary);
     }
 }

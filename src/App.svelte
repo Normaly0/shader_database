@@ -4,6 +4,7 @@
 
   import Panel from 'src/components/Panel.svelte';
   import Canvas from 'src/components/Canvas.svelte';
+  import UI from 'src/components/UI.svelte';
 
   let currentRotation = 0;
   let rotateModels = false;
@@ -17,6 +18,7 @@
   </div>
 
   <Panel />
+  <UI />
   
   <Canvas currentRotation={currentRotation} rotateModels={rotateModels} />
 
@@ -26,6 +28,6 @@
 
 </main>
 
-<style>
-  
+<style lang="scss">
+  @use 'src/styles/App.scss';
 </style>
