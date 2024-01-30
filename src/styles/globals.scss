@@ -129,7 +129,7 @@ button {
     margin: 0;
     padding: 0;
 
-    background: url(clipboard.svg) center/100% no-repeat;
+    background: url(/clipboard.svg) center/100% no-repeat;
 
     &::after, &::before {
         content: none;

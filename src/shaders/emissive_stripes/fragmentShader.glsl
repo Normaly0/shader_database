@@ -86,7 +86,7 @@ void main() {
     pattern = clamp(pattern, 0.0, 5.0);
     pattern = step(0.3, pattern);
 
-    float cellshading = dot(vNormal.xzy, vec3(-1.0, 0.5, 1.0));
+    float cellshading = dot(vNormal.xzy, vec3(-1.0, 0.51, 1.0));
     cellshading = step(0.5, cellshading);
 
     vec3 ColorShadow = vec3(0.56, 0.07, 0.00);

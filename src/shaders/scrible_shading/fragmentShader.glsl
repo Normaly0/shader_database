@@ -86,7 +86,7 @@ float cnoise(vec3 P){
 
 void main() {
 
-    float angle = dot(vNormal.xzy, vec3(-1.0, 0.2, 1.5));
+    float angle = dot(vNormal.xzy, vec3(-1.0, 0.3, 1.5));
     angle *= 3.0;
 
     mat3 rotationMatrix = rotateMatrix(radians(-40.0));

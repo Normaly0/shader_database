@@ -80,8 +80,8 @@
 
     //Camera
 
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height);
-    camera.position.z = 3.5;
+    const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height);
+    camera.position.z = 6.0;
     scene.add(camera);
 
     //Models
@@ -236,6 +236,7 @@
     onMount(() => {
         controls = new OrbitControls(camera, canvasRef);
         controls.enableDamping = true;
+        controls.enablePan = false;
     })
 
     //Animation
@@ -256,7 +257,7 @@
         effectComposer.render()
 
         //Animate models
-        animateModelRotation(elapsedTime);
+        animateModelRotation();
         changeModelFocus(currentRotation);
 
         //Repeat
@@ -268,7 +269,6 @@
     onMount(() => {
         tick();
     })
-
 
     function changeModelFocus(rotation : number) {
 
@@ -303,19 +303,19 @@
             i++;
 
         })
-    }
+    }    
 
-    console.log(modelsGroup.children);
-    
-
-    function animateModelRotation(delta : number) {
+    function animateModelRotation() {
         if (!rotateModels) return
 
-        modelsGroup.children.map((model) => {
-            model.rotation.y = Math.PI * (delta * 0.15);
-        })
-        outlineGroup.children.map((model) => {
-            model.rotation.y = Math.PI * (delta * 0.15);
+        modelsGroup.traverse(el => {
+            if (el.type === 'Group') return
+            el.rotation.y += 0.01;
+        });
+
+        outlineGroup.traverse(el => {
+            if (el.type === 'Group') return
+            el.rotation.y += 0.01;
         })
     }
 
