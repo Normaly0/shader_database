@@ -12,6 +12,55 @@
     @include breakpoint($breakpoint-mid) {
         top: 60px;
     }
+
+    &::after {
+        content: '';
+        position: absolute;
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: 0;
+        width: 120%;
+        height: 1px;
+        background: var(--color-secondary);
+
+        @include breakpoint($breakpoint-mid) {
+            height: 2px;
+        }
+    }
+
+    span {
+        position: absolute;
+        bottom: 0;
+        width: 10%;
+        height: 1px;
+        background: var(--color-secondary);
+        z-index: 1;
+
+        @include breakpoint($breakpoint-mid) {
+            height: 2px;
+        }
+    }
+
+    span:nth-of-type(1) {
+        transform-origin: center right;
+        transform: rotate(-30deg);
+        left: -20%;
+    }
+    span:nth-of-type(2) {
+        transform-origin: center left;
+        transform: rotate(30deg);
+        right: -20%;
+    }
+    span:nth-of-type(3) {
+        transform: translateX(-50%);
+        left: 50%;
+        bottom: -7px;
+        width: 100%;
+
+        @include breakpoint($breakpoint-mid) {
+            bottom: -10px;
+        }
+    }
 }
 
 .btn-next, .btn-prev {

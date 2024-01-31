@@ -15,6 +15,9 @@
 
   <div class="title">
     <h1>{$shaders[$shaderID].name}</h1>
+    <span />
+    <span />
+    <span />
   </div>
 
   <Panel />

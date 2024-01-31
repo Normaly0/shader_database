@@ -30,6 +30,6 @@
     posY - {posYtxt}
 </p>
 
-<style lang="scss">
-        
-</style>
+<div class="vignette" />
+
+<!-- <div class="corner corner-tr" /> -->
