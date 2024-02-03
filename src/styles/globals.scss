@@ -26,10 +26,6 @@ body {
     overflow: clip;
 }
 
-main {
-    // overflow: hidden;
-}
-
 pre { 
     --bevel: 1.5em;
 
@@ -190,14 +186,20 @@ button {
     height: 100%;
     background: linear-gradient(90deg, black , transparent 15%, transparent 85%, black);
     mix-blend-mode: soft-light;
-    opacity: .5;
+    opacity: .6;
 }
 
-// .corner {
+.bg {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    width: 100vw;
+    height: 100vh;
 
-// }
+    object-fit: cover;
+    mix-blend-mode: screen;
+    filter: blur(17px);
 
-// .corner-tp {
-//     width: 100px;
-//     height: 100px;
-// }
+    opacity: .4;
+}

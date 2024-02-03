@@ -30,6 +30,6 @@
     posY - {posYtxt}
 </p>
 
-<div class="vignette" />
+<img src="/background.webp" alt="" class="bg"/>
 
-<!-- <div class="corner corner-tr" /> -->
+<div class="vignette" />
